@@ -92,24 +92,6 @@ canvas.onmouseup = mouse_up;
 canvas.onmouseout = mouse_out;
 canvas.onmousemove = mouse_move;
 
-// Mouse Intercativity
-const mouse = {
-  x: canvas.width / 2,
-  y: canvas.height / 2,
-  click: false,
-};
-
-// canvas.addEventListener("click", function (event) {
-//   mouse.click = true;
-//   mouse.x = event.x - canvasPosition.left;
-//   mouse.y = event.y - canvasPosition.top;
-//   console.log(mouse.x, mouse.y);
-// });
-
-// canvas.addEventListener("mouseup", function (e) {
-//   mouse.click = false;
-// });
-
 // Chest
 const chestImage = new Image();
 chestImage.src = "../src/chest/RED-OPEN.png";
@@ -410,9 +392,4 @@ function animate() {
 
 animate();
 
-canvas.addEventListener("resize", resizeCanvas());
 
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
