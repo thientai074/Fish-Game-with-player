@@ -19,22 +19,31 @@ ctx.font = "50px Georgia";
 
 let canvasPosition = canvas.getBoundingClientRect();
 
+// Xac dinh vi tri chuot
+
 let is_mouse_in_shape = function (x, y, enemy) {
-  let shape_left = enemy.x + enemy.radius * 4.2;
-  let shape_right = shape_left + enemy.radius * 2;
-  let shape_top = enemy.y;
-  let shape_bottom = enemy.y + enemy.radius * 2;
+  let shape_left = enemy.x - enemy.radius * 1.7;
+  let shape_right = shape_left + enemy.radius * 1.7;
+  let shape_top = enemy.y - enemy.radius * 1.7;
+  let shape_bottom = enemy.y + enemy.radius * 1.7;
+  console.log("shape_left", enemy.x);
 
   if (x > shape_left && x < shape_right && y > shape_top && y < shape_bottom) {
+    console.log("trong");
     return true;
-  } else return false;
+  } else {
+    console.log("sai");
+    return false;
+  }
 };
 
 let mouse_down = function (event) {
   event.preventDefault();
 
-  startX = parseInt(event.clientX);
-  startY = parseInt(event.clientY);
+  startX = parseInt(event.clientX - canvasPosition.left);
+  startY = parseInt(event.clientY - canvasPosition.top);
+
+  // console.log("startX, startY", startX, startY);
 
   let index = 0;
 
@@ -71,9 +80,10 @@ let mouse_move = async (event) => {
     return;
   } else {
     event.preventDefault();
-    let mouseX = parseInt(event.clientX);
-    let mouseY = parseInt(event.clientY);
+    let mouseX = parseInt(event.clientX - canvasPosition.left);
+    let mouseY = parseInt(event.clientY - canvasPosition.top);
 
+    // console.log("mouseX, mouseY", mouseX, mouseY);
     let dx = mouseX - startX;
     let dy = mouseY - startY;
 
@@ -287,36 +297,22 @@ class Enemy {
     this.distance;
   }
   draw() {
-    if ((this.catchFish = true)) {
-      ctx.fillStyle = "transparent";
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.drawImage(
-        enemyImage,
-        this.frameX * this.spriteWidth,
-        this.frameY * this.spriteHeight,
-        this.spriteWidth,
-        this.spriteHeight,
-        this.x - 60,
-        this.y - 70,
-        this.spriteWidth / 3,
-        this.spriteWidth / 3
-      );
-      // resizeCanvas()
-    } else if ((this.catchFish = false)) {
-      ctx.drawImage(
-        enemyImage,
-        0,
-        0,
-        this.spriteWidth,
-        this.spriteHeight,
-        340,
-        310,
-        this.spriteWidth / 3,
-        this.spriteWidth / 3
-      );
-    }
+    ctx.fillStyle = "transparent";
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.drawImage(
+      enemyImage,
+      this.frameX * this.spriteWidth,
+      this.frameY * this.spriteHeight,
+      this.spriteWidth,
+      this.spriteHeight,
+      this.x - 60,
+      this.y - 70,
+      this.spriteWidth / 3,
+      this.spriteWidth / 3
+    );
+    // resizeCanvas()
   }
 
   update() {
@@ -398,5 +394,3 @@ animate();
 //   canvas.width = window.innerWidth;
 //   canvas.height = window.innerHeight;
 // }
-
-
